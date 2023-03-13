@@ -172,169 +172,65 @@ MSE = \frac{1}{n}\sum_{i=1}^{n}(y_i - \hat{y_i})^2
 where $n$ is the number of observations, $y_i$ is the actual value of the dependent variable for observation $i$, and $\hat{y_i}$ is the predicted value of the dependent variable for observation $i$.
 
 The advantage of MSE is that it penalizes large errors more than small errors, making it useful in cases where we want to reduce the impact of outliers on the model.
-
 \subsubsection{Mean Absolute Error (MAE)}
+
 \begin{center}
-    \begin{tikzpicture}[scale=1.5]
-    \draw[->] (-1.5,0) -- (1.5,0) node[right] {$y - \hat{y}$};
-    \draw[->] (0,-0.5) -- (0,2) node[above] {$L$};
-    \draw[scale=1,domain=-1.2:1.2,smooth,variable=\x,blue] plot ({\x},{abs(\x)});
-    \draw[dotted] (-1,1) -- (1,1);
-    \draw[dotted] (1,0) -- (1,1);
-    \draw[dotted] (-1,0) -- (-1,1);
-    \node[left] at (0,1) {$MAE$};
-    \node[below] at (1,0) {$\delta$};
-    \node[below] at (-1,0) {$-\delta$};
-    \end{tikzpicture}
-    \end{center}
+\begin{tikzpicture}[scale=1.5]
+\draw[->] (-1.5,0) -- (1.5,0) node[right] {$y - \hat{y}$};
+\draw[->] (0,-0.5) -- (0,2) node[above] {$L$};
+\draw[scale=1,domain=-1.2:1.2,smooth,variable=\x,blue] plot ({\x},{abs(\x)});
+\draw[dotted] (-1,1) -- (1,1);
+\draw[dotted] (0,0) -- (0,1);
+\node[left] at (0,1) {$MAE$};
+\node[below] at (1,0) {$\delta$};
+\node[below] at (-1,0) {$-\delta$};
+\end{tikzpicture}
+\end{center}
+
 The mean absolute error (MAE) is another commonly used error function in regression models. It measures the average of the absolute differences between the predicted values and the actual values:
 
 \begin{equation}
 MAE = \frac{1}{n}\sum_{i=1}^{n}|y_i - \hat{y_i}|
 \end{equation}
 
-The advantage of MAE is that it is less sensitive to outliers than MSE, making it useful in cases where we want to reduce the impact of outliers on the model.
+where $n$ is the number of observations, $y_i$ is the actual value of the dependent variable for observation $i$, and $\hat{y_i}$ is the predicted value of the dependent variable for observation $i$.
 
-\subsubsection{Root Mean Squared Error (RMSE)}
+One advantage of MAE over MSE is that it is less sensitive to outliers, since it penalizes all errors linearly. This can be useful in cases where the dataset has many outliers or the model should not be heavily influenced by them.
+\subsubsection{Huber Loss}
+
 \begin{center}
-    \begin{tikzpicture}[scale=1.5]
-    \draw[->] (-1.5,0) -- (1.5,0) node[right] {$y - \hat{y}$};
-    \draw[->] (0,-0.5) -- (0,2) node[above] {$L$};
-    \draw[scale=1,domain=-1.2:1.2,smooth,variable=\x,blue] plot ({\x},{sqrt(\x*\x)});
-    \draw[dotted] (1,0) -- (1,1);
-    \draw[dotted] (-1,0) -- (-1,1);
-    \draw[dotted] (0,1) -- (1,1);
-    \node[left] at (0,1) {$\sqrt{MSE}$};
-    \node[below] at (1,0) {$\delta$};
-    \node[below] at (-1,0) {$-\delta$};
-    \end{tikzpicture}
-    \end{center}
-The root mean squared error (RMSE) is a variant of the MSE that takes the square root of the MSE. It is commonly used to measure the accuracy of a regression model:
-
-\begin{equation}
-RMSE = \sqrt{\frac{1}{n}\sum_{i=1}^{n}(y_i - \hat{y_i})^2}
-\end{equation}
-
-The advantage of RMSE is that it has the same units as the dependent variable, making it easier to interpret.
-
-\subsubsection{R-squared}
-\begin{center}
-    \begin{tikzpicture}[scale=1.5]
-    \draw[->] (-1,0) -- (1,0) node[right] {$\beta_1$};
-    \draw[->] (0,0) -- (0,1) node[above] {$R^2$};
-    \draw[scale=1,domain=-1:1,smooth,variable=\x,blue] plot ({\x},{1-\x*\x});
-    \node[below] at (1,0) {$\beta_{1, \text {max}}$};
-    \node[below] at (-1,0) {$\beta_{1, \text {min}}$};
-    \node[left] at (0,1) {$1$};
-    \end{tikzpicture}
-    \end{center}
-    
-R-squared is a statistical measure that represents the proportion of variance in the dependent variable that is explained by the independent variables in the regression model. It is also known as the coefficient of determination and is calculated as:
-
-\begin{equation}
-R^2 = 1 - \frac{SS_{res}}{SS_{tot}}
-\end{equation}
-
-where $SS_{res}$ is the sum of squared residuals, and $SS_{tot}$ is the total sum of squares.
-
-The advantage of R-squared is that it provides a measure of how well the regression model fits the data, and it ranges from 0 to 1, with higher values indicating a better fit.
-
-\subsubsection{Adjusted R-squared}
-\begin{center}
-    \begin{tikzpicture}[scale=1.5]
-    \draw[->] (-1.5,0) -- (1.5,0) node[right] {$R^2_{adj}$};
-    \draw[->] (0,-0.5) -- (0,2) node[above] {$p$};
-    \draw[scale=1,domain=-1:1,smooth,variable=\x,blue] plot ({\x},{1 - \x*\x/2});
-    \draw[dotted] (0,0) -- (0,1);
-    \node[left] at (0,1) {$p_{max}$};
-    \end{tikzpicture}
-    \end{center}
-Adjusted R-squared is a modified version of R-squared that adjusts for the number of independent variables in the model. It is calculated as:
-
-\begin{equation}
-Adjusted \ R^2 = 1 - \frac{(1 - R^2)(n - 1)}{n - p - 1}
-\end{equation}
-
-where $n$ is the number of observations, and $p$ is the number of independent variables.
-
-The advantage of Adjusted R-squared is that it penalizes the inclusion of irrelevant variables in the model, making it a better measure of model fit.
-
-\subsubsection{Akaike Information Criterion (AIC)}
-
-Akaike Information Criterion (AIC) is a measure of the relative quality of a statistical model for a given set of data. It is calculated as:
-
-\begin{equation}
-AIC = -2ln(L) + 2p
-\end{equation}
-
-where $L$ is the likelihood of the data given the model, and $p$ is the number of parameters in the model.
-
-The advantage of AIC is that it provides a measure of model quality that takes into account the complexity of the model.
-
-\subsubsection{Mean Absolute Percentage Error (MAPE)}
-\begin{center}
-    \begin{tikzpicture}[scale=1.5]
-    \draw[->] (-1.5,0) -- (1.5,0) node[right] {$y - \hat{y}$};
-    \draw[->] (0,-0.5) -- (0,2) node[above] {$L$};
-    \draw[scale=1,domain=-1.2:1.2,smooth,variable=\x,blue] plot ({\x},{abs(\x/1)});
-    \draw[dotted] (-1,1) -- (1,1);
-    \draw[dotted] (1,0) -- (1,1);
-    \draw[dotted] (-1,0) -- (-1,1);
-    \node[left] at (0,1) {MAPE};
-    \node[below] at (1,0) {$\delta$};
-    \node[below] at (-1,0) {$-\delta$};
-    \end{tikzpicture}
-    \end{center}
-The mean absolute percentage error (MAPE) is an error function used in regression models to measure the average percentage difference between the predicted values and the actual values:
-
-\begin{equation}
-MAPE = \frac{1}{n}\sum_{i=1}^{n} \left| \frac{y_i - \hat{y_i}}{y_i} \right| \times 100%
-\end{equation}
-
-The advantage of MAPE is that it provides a measure of error in relative terms, which can be useful for comparing the performance of different models on different datasets.
-
-\subsubsection{Mean Percentage Error (MPE)}
-\begin{center}
-    \begin{tikzpicture}[scale=1.5]
-    \draw[->] (-1.5,0) -- (1.5,0) node[right] {$y - \hat{y}$};
-    \draw[->] (0,-1.5) -- (0,1.5) node[above] {$L$};
-    \draw[scale=1,domain=-1.2:1.2,smooth,variable=\x,blue] plot ({\x},{\x});
-    \draw[dotted] (-1,-1) -- (1,1);
-    \draw[dotted] (1,0) -- (1,1);
-    \draw[dotted] (-1,0) -- (-1,-1);
-    \node[left] at (0,1) {$100\%$};
-    \node[right] at (0,-1) {$-100\%$};
-    \node[below] at (1,0) {$\delta$};
-    \node[below] at (-1,0) {$-\delta$};
-    \end{tikzpicture}
-    \end{center}
-The mean percentage error (MPE) is another error function used in regression models to measure the average percentage difference between the predicted values and the actual values:
-
-\begin{equation}
-MPE = \frac{1}{n}\sum_{i=1}^{n} \left( \frac{y_i - \hat{y_i}}{y_i} \right) \times 100%
-\end{equation}
-
-The advantage of MPE is that it provides a measure of the direction of the error (i.e., overestimation or underestimation) in percentage terms.
-
-\subsubsection{Mean Squared Log Error (MSLE)}
-\begin{center}
-    \begin{tikzpicture}[xscale=6]
-    \draw[->] (0,0) -- (1,0) node[right] {$y - \hat{y}$};
-    \draw[->] (0,0) -- (0,5) node[above] {$L$};
-    \draw[scale=1,domain=0:1,smooth,variable=\x,blue] plot ({\x},{(ln(1)-ln(1+\x))^2});
-    \node[left] at (0,5) {$MSLE$};
-    \end{tikzpicture}
+\begin{tikzpicture}[scale=1.5]
+\draw[->] (-1.5,0) -- (1.5,0) node[right] {$y - \hat{y}$};
+\draw[->] (0,-0.5) -- (0,2) node[above] {$L$};
+\draw[scale=1,domain=-1.2:1.2,smooth,variable=\x,blue] plot ({\x},{0.5*\x*\x}) node[right] {$\frac{1}{2}\delta^2$};
+\draw[scale=1,domain=-1.2:-0.3,smooth,variable=\x,blue] plot ({\x},{abs(\x)-0.25}) node[right] { $|\delta|-\frac{1}{2}$};
+\draw[scale=1,domain=0.3:1.2,smooth,variable=\x,blue] plot ({\x},{abs(\x)-0.25}) node[right] { $|\delta|-\frac{1}{2}$};
+\draw[dotted] (-1,0.25) -- (-0.3,0.25);
+\draw[dotted] (-1,-0.25) -- (-0.3,-0.25);
+\draw[dotted] (-0.3,0) -- (-0.3,0.25);
+\draw[dotted] (-0.3,0) -- (-0.3,-0.25);
+\draw[dotted] (0.3,0) -- (0.3,0.25);
+\draw[dotted] (0.3,0) -- (0.3,-0.25);
+\draw[dotted] (1,-0.25) -- (0.3,-0.25);
+\draw[dotted] (1,0.25) -- (0.3,0.25);
+\node[left] at (0,0.5) {$\frac{1}{2}\delta^2$};
+\node[below] at (-0.3,0) {$-\delta$};
+\node[below] at (0.3,0) {$\delta$};
+\node[below] at (-1,0) {$-\delta_{\text{max}}$};
+\node[below] at (1,0) {$\delta_{\text{max}}$};
+\end{tikzpicture}
 \end{center}
 
-
-The mean squared log error (MSLE) is an error function used in regression models to measure the difference between the predicted values and the actual values in logarithmic space:
+The Huber Loss is a hybrid loss function that combines the advantages of the mean squared error and the mean absolute error. It is defined as:
 
 \begin{equation}
-MSLE = \frac{1}{n}\sum_{i=1}^{n}(log(1+y_i) - log(1+\hat{y_i}))^2
-\end{equation}
+    L_\delta(a)= \begin{cases}\frac{1}{2} a^2 & \text { for }|a| \leq \delta \\ \delta \cdot\left(|a|-\frac{1}{2} \delta\right), & \text { otherwise }\end{cases}
+    \end{equation}
 
-where $y_i$ is the actual value of the dependent variable for observation $i$, and $\hat{y_i}$ is the predicted value of the dependent variable for observation $i$.
+where $\delta$ is a hyperparameter that determines the threshold between the quadratic and linear parts of the loss function.
 
-The advantage of MSLE is that it penalizes underestimation and overestimation equally, making it useful in cases where both types of errors are equally important.
-
+The advantage of the Huber loss is that it is a compromise between the mean squared error and the mean absolute error, providing a balance between robustness to outliers and sensitivity to gradient information. This can be useful in cases where the dataset has outliers that need to be handled, but the model still needs to learn from the rest of the data.
+\subsubsection{Squared Log Loss}
+\subsubsection{Poisson loss}
+\subsubsection{Exponential loss}
 \end{document}
