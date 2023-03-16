@@ -101,12 +101,13 @@ The assumptions of linear regression models include:
 Polynomial regression is a type of regression analysis that models the relationship between a dependent variable and one or more independent variables using a polynomial equation. The polynomial regression equation is given as follows:
 
 \begin{equation}
-    Y = \beta_0 + \beta_1X_1 + \beta_2X_2 + ... + \beta_pX_p \\
-    + \beta_{p+1}X_1^2 + \beta_{p+2}X_2^2 + ... + \beta_{2p}X_p^2 \\
-    + \beta_{2p+1}X_1X_2 + ... + \beta_{(k-1)p+1}X_1^{k-1} + ... \\
-    + \beta_{kp}X_p^{k-1} + \epsilon
+    \begin{aligned}[b]
+    Y = \beta_0 &+ \beta_1X_1 + \beta_2X_2 + ... + \beta_pX_p \\
+    &+ \beta_{p+1}X_1^2 + \beta_{p+2}X_2^2 + ... + \beta_{2p}X_p^2 \\
+    &+ \beta_{2p+1}X_1X_2 + ... + \beta_{(k-1)p+1}X_1^{k-1} + ... \\
+    &+ \beta_{kp}X_p^{k-1} + \epsilon
+    \end{aligned}
     \end{equation}
-    
     
 
 where $\beta_0$ is the intercept, $\beta_1, \beta_2, ..., \beta_p$ are the coefficients of the first-order terms, $\beta_{p+1}, \beta_{p+2}, ..., \beta_{2p}$ are the coefficients of the second-order terms, $\beta_{2p+1}, ..., \beta_{(k-1)p+1}$ are the coefficients of the interaction terms, and $\beta_{kp}$ are the coefficients of the $k$th-order terms. $X_1, X_2, ..., X_p$ are the independent variables, and $\epsilon$ is the error term.
@@ -144,6 +145,57 @@ The assumptions of logistic regression models include:
 \end{itemize}
 
 Note that normality and homoscedasticity are not assumptions of logistic regression models since the dependent variable is binary.
+
+\subsection{Ridge Regression Models and Assumptions}
+Ridge regression is a type of linear regression that incorporates regularization to address the problem of multicollinearity in the independent variables. The ridge regression equation is given as follows:
+
+\begin{equation}
+Y = \beta_0 + \beta_1X_1 + \beta_2X_2 + ... + \beta_pX_p + \epsilon
+\end{equation}
+
+where $\beta_0$ is the intercept, $\beta_1, \beta_2, ..., \beta_p$ are the coefficients, and $X_1, X_2, ..., X_p$ are the independent variables.
+
+The ridge regression model introduces a regularization term, which adds a penalty for large coefficients. The objective function to be minimized is:
+
+\begin{equation}
+\sum_{i=1}^{n} (y_i - (\beta_0 + \beta_1x_{i1} + \beta_2x_{i2} + ... + \beta_px_{ip}))^2 + \lambda\sum_{j=1}^{p} \beta_j^2
+\end{equation}
+
+where $\lambda$ is the regularization parameter, which determines the strength of the penalty term.
+
+The assumptions of ridge regression models are similar to those of linear regression models, with some differences:
+
+\begin{itemize}
+\item Linearity: The relationship between the dependent variable and the independent variables is linear.
+\item Independence: The error terms are independent of each other.
+\item Homoscedasticity: The variance of the error terms is constant across all levels of the independent variables.
+\item Normality: The error terms are normally distributed.
+\item Multicollinearity: Ridge regression addresses multicollinearity by introducing the regularization term, which shrinks the coefficients of highly correlated variables toward each other.
+\end{itemize}
+
+Ridge regression is particularly useful when the independent variables are highly correlated, as it helps to stabilize the parameter estimates and prevent overfitting.
+
+\subsection{Time Series Regression Models and Assumptions}
+Time series regression is a type of regression analysis that models the relationship between a dependent variable and one or more independent variables, considering the temporal ordering of the observations. The time series regression equation is given as follows:
+
+\begin{equation}
+Y_t = \beta_0 + \beta_1X_{1t} + \beta_2X_{2t} + ... + \beta_pX_{pt} + \epsilon_t
+\end{equation}
+
+where $Y_t$ is the dependent variable at time $t$, $\beta_0$ is the intercept, $\beta_1, \beta_2, ..., \beta_p$ are the coefficients, $X_{1t}, X_{2t}, ..., X_{pt}$ are the independent variables at time $t$, and $\epsilon_t$ is the error term at time $t$.
+
+The assumptions of time series regression models include:
+
+\begin{itemize}
+\item Linearity: The relationship between the dependent variable and the independent variables is linear.
+\item Stationarity: The time series data should be stationary, i.e., the mean, variance, and autocorrelation structure do not change over time.
+\item No multicollinearity: The independent variables should not be highly correlated with each other.
+\item No autocorrelation: The error terms should not exhibit autocorrelation, meaning that the error term at time $t$ should not be correlated with the error term at any other time.
+\item Homoscedasticity: The variance of the error terms is constant across all levels of the independent variables.
+\item Normality: The error terms are normally distributed.
+\end{itemize}
+
+Time series regression models often incorporate lags of the dependent variable and/or the independent variables to account for temporal dependencies in the data. These models can be useful for understanding the effects of past values on the current value of the dependent variable and for forecasting future values of the dependent variable.
 
 \subsection{Error Functions in Regression Models}
 
@@ -196,41 +248,307 @@ MAE = \frac{1}{n}\sum_{i=1}^{n}|y_i - \hat{y_i}|
 where $n$ is the number of observations, $y_i$ is the actual value of the dependent variable for observation $i$, and $\hat{y_i}$ is the predicted value of the dependent variable for observation $i$.
 
 One advantage of MAE over MSE is that it is less sensitive to outliers, since it penalizes all errors linearly. This can be useful in cases where the dataset has many outliers or the model should not be heavily influenced by them.
-\subsubsection{Huber Loss}
 
+\subsubsection{Mean Squared Logarithmic Error (MSLE)}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.5]
+\draw[->] (-0.1,0) -- (1.5,0) node[right] {$y - \hat{y}$};
+\draw[->] (0,-0.5) -- (0,2) node[above] {$L$};
+\draw[scale=1,domain=0.1:1.2,smooth,variable=\x,blue] plot ({\x},{(\x-1)^2});
+\draw[dotted] (1,0) -- (1,1);
+\node[left] at (0,1) {$MSLE$};
+\node[below] at (1,0) {$\delta$};
+\end{tikzpicture}
+\end{center}
+
+The mean squared logarithmic error (MSLE) is an error function used in regression models when dealing with exponential growth or predicting multiplicative factors. It measures the average of the squared differences between the logarithms of the predicted values and the actual values:
+
+\begin{equation}
+MSLE = \frac{1}{n}\sum_{i=1}^{n}(\log(1 + y_i) - \log(1 + \hat{y}_i))^2
+\end{equation}
+
+where $n$ is the number of observations, $y_i$ is the actual value of the dependent variable for observation $i$, and $\hat{y_i}$ is the predicted value of the dependent variable for observation $i$.
+
+The advantage of MSLE over MSE is that it is less sensitive to large differences between the predicted and actual values when both are large. This can be useful when modeling growth rates or multiplicative factors.
+
+\subsubsection{Huber Loss}
 \begin{center}
 \begin{tikzpicture}[scale=1.5]
 \draw[->] (-1.5,0) -- (1.5,0) node[right] {$y - \hat{y}$};
 \draw[->] (0,-0.5) -- (0,2) node[above] {$L$};
-\draw[scale=1,domain=-1.2:1.2,smooth,variable=\x,blue] plot ({\x},{0.5*\x*\x}) node[right] {$\frac{1}{2}\delta^2$};
-\draw[scale=1,domain=-1.2:-0.3,smooth,variable=\x,blue] plot ({\x},{abs(\x)-0.25}) node[right] { $|\delta|-\frac{1}{2}$};
-\draw[scale=1,domain=0.3:1.2,smooth,variable=\x,blue] plot ({\x},{abs(\x)-0.25}) node[right] { $|\delta|-\frac{1}{2}$};
-\draw[dotted] (-1,0.25) -- (-0.3,0.25);
-\draw[dotted] (-1,-0.25) -- (-0.3,-0.25);
-\draw[dotted] (-0.3,0) -- (-0.3,0.25);
-\draw[dotted] (-0.3,0) -- (-0.3,-0.25);
-\draw[dotted] (0.3,0) -- (0.3,0.25);
-\draw[dotted] (0.3,0) -- (0.3,-0.25);
-\draw[dotted] (1,-0.25) -- (0.3,-0.25);
-\draw[dotted] (1,0.25) -- (0.3,0.25);
-\node[left] at (0,0.5) {$\frac{1}{2}\delta^2$};
-\node[below] at (-0.3,0) {$-\delta$};
-\node[below] at (0.3,0) {$\delta$};
-\node[below] at (-1,0) {$-\delta_{\text{max}}$};
-\node[below] at (1,0) {$\delta_{\text{max}}$};
+\draw[scale=1,domain=-1:-0.5,smooth,variable=\x,blue] plot ({\x},{abs(\x)*2 - 1/2});
+\draw[scale=1,domain=0.5:1,smooth,variable=\x,blue] plot ({\x},{abs(\x)*2 - 1/2});
+\draw[scale=1,domain=-0.5:0.5,smooth,variable=\x,blue] plot ({\x},{(\x)^2*2});
+\draw[dotted] (-0.5,0) -- (-0.5,0.25);
+\draw[dotted] (0.5,0) -- (0.5,0.25);
+\node[below] at (-0.5,0) {$-\delta$};
+\node[below] at (0.5,0) {$\delta$};
 \end{tikzpicture}
 \end{center}
 
-The Huber Loss is a hybrid loss function that combines the advantages of the mean squared error and the mean absolute error. It is defined as:
+The Huber loss is a combination of the mean squared error (MSE) and the mean absolute error (MAE). It is quadratic for errors smaller than a certain threshold (usually represented as $\delta$) and linear for errors larger than that threshold. This loss function is less sensitive to outliers than the MSE:
 
 \begin{equation}
-    L_\delta(a)= \begin{cases}\frac{1}{2} a^2 & \text { for }|a| \leq \delta \\ \delta \cdot\left(|a|-\frac{1}{2} \delta\right), & \text { otherwise }\end{cases}
-    \end{equation}
+HuberLoss(y, \hat{y}) = \begin{cases}
+\frac{1}{2}(y - \hat{y})^2, & \text{if } |y - \hat{y}| \le \delta \\
+\delta(|y - \hat{y}| - \frac{1}{2}\delta), & \text{otherwise}
+\end{cases}
+\end{equation}
 
-where $\delta$ is a hyperparameter that determines the threshold between the quadratic and linear parts of the loss function.
+The advantages of the Huber loss function include:
+- It is less sensitive to outliers than the MSE, as it uses a linear function for large errors.
+- It retains the differentiability property of the MSE for small errors, which is useful in optimization algorithms that require gradient information.
+- By adjusting the $\delta$ parameter, we can control the transition point between the quadratic and linear regions of the loss function, allowing us to fine-tune the model's sensitivity to outliers.
 
-The advantage of the Huber loss is that it is a compromise between the mean squared error and the mean absolute error, providing a balance between robustness to outliers and sensitivity to gradient information. This can be useful in cases where the dataset has outliers that need to be handled, but the model still needs to learn from the rest of the data.
-\subsubsection{Squared Log Loss}
-\subsubsection{Poisson loss}
-\subsubsection{Exponential loss}
+\subsection{Model Selection and Loss Function Evaluation}
+
+Selecting the appropriate model and loss function is crucial for obtaining accurate and reliable predictions. This section will discuss how to choose a suitable model, select the right loss function, and evaluate the goodness of fit.
+
+\subsubsection{Model Selection}
+When selecting a model, one should consider the following aspects:
+
+\begin{enumerate}
+\item The nature of the data: Consider the type of data you are working with (e.g., continuous, binary, count data) and the relationships between variables (linear, nonlinear, time-dependent).
+\item Model complexity: Choose a model that is neither too simple nor too complex. A simple model may not capture the underlying relationships in the data, while a complex model may overfit the data.
+\item Interpretability: In some cases, it is essential to have a model that is easy to interpret and understand.
+\item Cross-validation: Use techniques like k-fold cross-validation to estimate the model's performance on unseen data.
+\end{enumerate}
+
+\subsubsection{Loss Function Selection}
+When selecting a loss function, consider the following aspects:
+
+\begin{enumerate}
+\item The type of problem: Different loss functions are suitable for different types of problems, such as regression, classification, or ranking.
+\item The distribution of the data: Some loss functions may be more suitable for data with specific characteristics, such as skewed or heavy-tailed distributions.
+\item The impact of outliers: If your data contains outliers, you may want to choose a robust loss function that is less sensitive to extreme values.
+\end{enumerate}
+
+\subsubsection{Goodness of Fit Evaluation}
+To evaluate the goodness of fit of a model, consider the following criteria:
+
+\begin{enumerate}
+\item R-squared and adjusted R-squared: These measures indicate the proportion of the variance in the dependent variable explained by the independent variables in the model.
+\item Akaike Information Criterion (AIC) and Bayesian Information Criterion (BIC): These criteria balance the goodness of fit against the complexity of the model.
+\item Residual analysis: Examine the residuals (errors) of the model to check for patterns or deviations from the assumptions (e.g., linearity, independence, homoscedasticity, and normality).
+\item Cross-validation: Use techniques like k-fold cross-validation to estimate the model's performance on unseen data.
+\end{enumerate}
+
+\section{Practical Use of Regression (30 minutes)}
+
+In this section, we will discuss the practical aspects of using regression, starting with data preparation and preprocessing.
+
+\subsection{Data Preparation and Preprocessing}
+
+\subsubsection{Cleaning the Data}
+The first step in using regression is to clean the data. This involves:
+
+\begin{enumerate}
+\item Identifying and correcting data entry errors, inconsistencies, and duplicate records.
+\item Ensuring that the data is in a suitable format for analysis (e.g., numbers stored as text should be converted to numeric format).
+\end{enumerate}
+
+\subsubsection{Handling Missing Values}
+Handling missing values in the dataset is crucial for the reliability of the regression model. Common strategies for dealing with missing values include:
+
+\begin{enumerate}
+\item Removing records with missing values: This approach can be used if the number of records with missing values is relatively small and their removal does not significantly impact the representativeness of the dataset.
+\item Imputation: Replace missing values with a reasonable estimate, such as the mean, median, or mode of the variable. More sophisticated imputation methods, such as k-Nearest Neighbors or multiple imputation, can also be used.
+\item Using models that can handle missing values directly: Some regression models, such as decision trees and random forests, can handle missing values without the need for imputation.
+\end{enumerate}
+
+\subsubsection{Transforming Variables}
+In some cases, transforming variables may be necessary to meet the assumptions of the regression model or to improve its performance. Common variable transformations include:
+
+\begin{enumerate}
+\item Logarithmic transformation: Applying the natural logarithm to a variable can help stabilize variance and make the data more normally distributed.
+\item Standardization: Scaling the variables to have a mean of 0 and a standard deviation of 1 can help with the interpretation of coefficients and improve the performance of some regression models.
+\item Categorical encoding: Converting categorical variables into numerical format using techniques such as one-hot encoding or ordinal encoding.
+\end{enumerate}
+
+\subsubsection{Variable Selection}
+Selecting the appropriate variables for the regression model involves:
+
+\begin{enumerate}
+\item Identifying relevant independent variables based on domain knowledge, literature review, or exploratory data analysis.
+\item Checking for multicollinearity between independent variables, which can cause instability in the regression coefficients and make the model difficult to interpret. Methods to detect multicollinearity include calculating the correlation matrix, variance inflation factors (VIF), or using dimensionality reduction techniques such as principal component analysis (PCA).
+\item Using variable selection techniques such as stepwise selection, Lasso regression, or recursive feature elimination to identify the most important variables for the model.
+\end{enumerate}
+
+\subsection{Model Training and Evaluation}
+
+\subsubsection{Training the Regression Model}
+After preparing the data and selecting the variables, the next step is to train the regression model on the data. This involves selecting the appropriate regression algorithm, such as linear regression, ridge regression, or LASSO, depending on the problem at hand and the assumptions made about the data.
+
+To improve the model's performance, it's essential to tune the model's hyperparameters. Hyperparameters are external factors that influence the training process, such as learning rate, regularization strength, or the degree of a polynomial in polynomial regression. Grid search, random search, or Bayesian optimization are common methods for hyperparameter tuning.
+
+\subsubsection{Evaluating the Model on a Test Set}
+Once the model is trained, it's essential to evaluate its performance on a test set. The test set should be separate from the training set to ensure the model's performance is assessed on unseen data. This helps to understand how well the model generalizes to new data and prevents overfitting.
+
+\subsubsection{Model Evaluation Metrics}
+Several evaluation metrics can be used to measure the performance of the regression model. Some common metrics include:
+
+\begin{itemize}
+\item Mean Squared Error (MSE): The average of the squared differences between the predicted values and the actual values. MSE emphasizes larger errors over smaller ones.
+\begin{equation}
+MSE = \frac{1}{n}\sum_{i=1}^{n}(y_i - \hat{y_i})^2
+\end{equation}
+
+\item Root Mean Squared Error (RMSE): The square root of the MSE. RMSE has the same units as the dependent variable and provides a more interpretable measure of the model's performance.
+\begin{equation}
+RMSE = \sqrt{MSE}
+\end{equation}
+
+\item Mean Absolute Error (MAE): The average of the absolute differences between the predicted values and the actual values. MAE is less sensitive to outliers than MSE or RMSE and provides a linear penalty for all errors.
+\begin{equation}
+MAE = \frac{1}{n}\sum_{i=1}^{n}|y_i - \hat{y_i}|
+\end{equation}
+\end{itemize}
+
+When evaluating the model, it's essential to compare its performance to a baseline, such as the performance of a simple linear regression model or the mean of the dependent variable. This helps to understand if the model is adding value beyond simple heuristics.
+
+\subsection{Feature Selection and Engineering}
+
+\subsubsection{Feature Selection}
+Feature selection is the process of selecting the most relevant variables to include in the regression model. By reducing the number of input features, the model becomes more interpretable, less prone to overfitting, and computationally less expensive.
+
+Some common feature selection techniques include:
+
+\begin{itemize}
+\item Filter methods: Techniques like correlation analysis and mutual information analysis are used to rank the importance of each feature based on their relationship with the dependent variable.
+\item Wrapper methods: Recursive feature elimination (RFE) is an example of a wrapper method that iteratively removes the least important features and evaluates the model's performance.
+\item Embedded methods: Techniques like LASSO regression perform feature selection as part of the model training process by applying a penalty to the model coefficients.
+\end{itemize}
+
+\subsubsection{Feature Engineering}
+Feature engineering is the process of creating new features from existing ones to improve the model's performance. This can involve:
+
+\begin{itemize}
+\item Transformations: Applying mathematical transformations such as logarithmic, square root, or power transformations to the original features.
+\item Interaction terms: Creating new features by multiplying two or more existing features to capture their interactions.
+\item Polynomial features: Generating higher-degree terms of the input features to model more complex relationships.
+\item Domain-specific features: Creating new features based on domain knowledge and expertise to better capture the underlying pattern in the data.
+\end{itemize}
+
+\subsection{Regularization and Overfitting}
+
+\subsubsection{Regularization}
+Regularization is a technique used to prevent overfitting of the regression model by adding penalties to the model coefficients. This discourages the model from becoming too complex and fitting the noise in the data instead of the underlying pattern.
+
+Two common regularization techniques are:
+
+\begin{itemize}
+\item L1 regularization (LASSO): Adds the sum of the absolute values of the coefficients as a penalty term. This can result in some coefficients being set to zero, effectively performing feature selection.
+\item L2 regularization (Ridge): Adds the sum of the squared values of the coefficients as a penalty term. This can shrink the coefficients towards zero, but typically does not set them to exactly zero.
+\end{itemize}
+
+\subsubsection{Overfitting}
+Overfitting occurs when the model is too complex and captures the noise in the data instead of the underlying pattern. This results in a model that performs well on the training data but poorly on new, unseen data.
+
+To prevent overfitting:
+
+\begin{itemize}
+\item Regularization techniques can be applied to discourage complex models.
+\item Feature selection can be used to reduce the number of input features and the model's complexity.
+\item Cross-validation can be used to evaluate the model's performance on different subsets of the data, ensuring that the model generalizes well to unseen data.
+\end{itemize}
+
+\subsection{Practical Applications of Regression}
+
+\subsubsection{Finance and Economics}
+
+Regression analysis is widely used in finance and economics to model relationships between variables and make predictions. Some examples include:
+
+\begin{itemize}
+\item Predicting stock prices: Regression models can be used to predict the future prices of stocks based on factors such as past prices, trading volume, and market sentiment.
+\item Estimating customer lifetime value: Regression models can help estimate the total value a customer brings to a business over their entire relationship, based on factors like demographics, purchase history, and customer interactions.
+\item Analyzing the impact of advertising on sales: Regression models can be used to determine the relationship between advertising spend and sales revenue, allowing businesses to optimize their advertising strategies for maximum return on investment.
+\end{itemize}
+
+\subsubsection{Engineering and Natural Sciences}
+
+Regression models are also used in engineering and natural sciences to model complex systems and predict outcomes based on input variables. Some examples include:
+
+\begin{itemize}
+\item Modeling the relationship between weather and crop yield: Regression models can be used to understand the impact of weather variables such as temperature, precipitation, and solar radiation on crop yields, enabling more effective agricultural planning.
+\item Predicting equipment failure: Regression models can help predict the failure of equipment or machinery based on factors such as age, usage, and maintenance history, allowing for proactive maintenance and reduced downtime.
+\item Estimating pollutant emissions: Regression models can be used to estimate the emissions of pollutants from industrial processes, transportation, and other sources based on factors like production levels and fuel consumption.
+\end{itemize}
+
+\subsubsection{Machine Learning Applications}
+
+Regression is a fundamental concept in machine learning, with numerous practical applications across various domains:
+
+\begin{itemize}
+\item Predicting housing prices: Regression models can be used to predict housing prices based on features such as square footage, location, and the number of bedrooms and bathrooms.
+\item Credit risk assessment: Regression models can help assess the creditworthiness of borrowers based on factors like income, credit history, and debt-to-income ratio, enabling better lending decisions.
+\item Image and speech recognition: Regression models can be used in combination with deep learning techniques to recognize objects in images or transcribe spoken words into text.
+\end{itemize}
+
+In summary, regression analysis is a versatile and powerful tool used across various fields to model relationships between variables, make predictions, and inform decision-making.
+
+\section{Intuition for Regression (30 minutes)}
+\subsection{Identifying Regression Problems}
+
+\subsubsection{When to Apply Regression}
+
+The first step in using regression is to identify when it can be applied to a problem. Regression is most suited for problems where there is a relationship between two or more variables, and we want to predict the value of one variable (the dependent variable) based on the values of the other variables (the independent variables).
+
+\subsubsection{Examples of Regression Problems}
+
+To understand when to apply regression, let's look at some examples of problems where regression can be applied:
+
+\begin{itemize}
+\item \textbf{Predicting housing prices:} In the real estate industry, we might want to predict housing prices based on features such as square footage, number of bedrooms, location, and other factors. In this case, the dependent variable is the housing price, and the independent variables are the various features of the house.
+\item \textbf{Predicting the weight of a person:} In the field of health and wellness, we may want to predict a person's weight based on their height and age. In this example, the dependent variable is the person's weight, while the independent variables are their height and age.
+\item \textbf{Forecasting product demand:} In supply chain management, we might want to predict product demand based on factors such as seasonality, promotional activities, and historical sales data. Here, the dependent variable is product demand, and the independent variables are the factors affecting demand.
+\end{itemize}
+
+In each of these examples, we can see that regression is a suitable approach because there is a relationship between the dependent variable and one or more independent variables. By understanding the nature of the problem and the relationships between variables, we can determine when it is appropriate to use regression for prediction and analysis.
+
+\subsection{Types of Regression Problems}
+
+\subsubsection{Simple Linear Regression}
+
+Simple linear regression is used when there is a linear relationship between one independent variable and the dependent variable. In this case, the goal is to find the best-fitting straight line that represents the relationship between the two variables. The equation for simple linear regression is:
+
+\begin{equation}
+Y = \beta_0 + \beta_1X + \epsilon
+\end{equation}
+
+where $Y$ is the dependent variable, $X$ is the independent variable, $\beta_0$ is the intercept, $\beta_1$ is the coefficient, and $\epsilon$ is the error term.
+
+\subsubsection{Multiple Linear Regression}
+
+Multiple linear regression is used when there is a linear relationship between multiple independent variables and the dependent variable. The goal is to find the best-fitting hyperplane that represents the relationship between the variables. The equation for multiple linear regression is:
+
+\begin{equation}
+Y = \beta_0 + \beta_1X_1 + \beta_2X_2 + ... + \beta_pX_p + \epsilon
+\end{equation}
+
+where $Y$ is the dependent variable, $X_1, X_2, ..., X_p$ are the independent variables, $\beta_0$ is the intercept, $\beta_1, \beta_2, ..., \beta_p$ are the coefficients, and $\epsilon$ is the error term.
+
+\subsubsection{Polynomial Regression}
+
+Polynomial regression is used when there is a curved relationship between the independent and dependent variables. This type of regression extends simple linear regression by adding higher-degree terms of the independent variable. The equation for polynomial regression is:
+
+\begin{equation}
+Y = \beta_0 + \beta_1X + \beta_2X^2 + ... + \beta_pX^p + \epsilon
+\end{equation}
+
+where $Y$ is the dependent variable, $X$ is the independent variable, $\beta_0$ is the intercept, $\beta_1, \beta_2, ..., \beta_p$ are the coefficients, and $\epsilon$ is the error term.
+
+\subsubsection{Logistic Regression}
+
+Logistic regression is used when the dependent variable is categorical, typically binary (e.g., success/failure, yes/no). The goal is to estimate the probability of an event occurring based on the values of the independent variables. The equation for logistic regression is:
+
+\begin{equation}
+\log\left(\frac{P(Y=1)}{1-P(Y=1)}\right) = \beta_0 + \beta_1X_1 + \beta_2X_2 + ... + \beta_pX_p
+\end{equation}
+
+where $P(Y=1)$ is the probability of the event occurring (i.e., $Y=1$), $X_1, X_2, ..., X_p$ are the independent variables, and $\beta_0, \beta_1, \beta_2, ..., \beta_p$ are the coefficients.
+
+Understanding the different types of regression problems and their respective models is crucial for selecting the appropriate method to solve a particular problem based on the nature of the independent and dependent variables.
+
+
 \end{document}
