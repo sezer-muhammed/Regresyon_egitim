@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1678609672 "d:/github/Regresyon_egitim/outline/main.tex" "main.pdf" "main" 1678609674 0
+["pdflatex"] 1678956124 "d:/github/Regresyon_egitim/outline/main.tex" "main.pdf" "main" 1678956125 0
   "c:/texlive/2022/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1678196820 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "c:/texlive/2022/texmf-dist/fonts/map/fontname/texfonts.map" 1678198564 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "c:/texlive/2022/texmf-dist/fonts/tfm/jknappen/ec/tcrm1000.tfm" 1678197866 1536 e07581a4bb3136ece9eeb4c3ffab8233 ""
@@ -11,6 +11,7 @@
   "c:/texlive/2022/texmf-dist/fonts/tfm/public/cm/cmr17.tfm" 1678196738 1292 296a67155bdbfc32aa9c636f21e91433 ""
   "c:/texlive/2022/texmf-dist/fonts/tfm/public/cm/cmr6.tfm" 1678196738 1300 b62933e007d01cfd073f79b963c01526 ""
   "c:/texlive/2022/texmf-dist/fonts/tfm/public/cm/cmr8.tfm" 1678196738 1292 21c1c5bfeaebccffdb478fd231a0997d ""
+  "c:/texlive/2022/texmf-dist/fonts/tfm/public/cm/cmr9.tfm" 1678196738 1292 6b21b9c2c7bebb38aa2273f7ca0fb3af ""
   "c:/texlive/2022/texmf-dist/fonts/tfm/public/cm/cmsy10.tfm" 1678196738 1124 6c73e740cf17375f03eec0ee63599741 ""
   "c:/texlive/2022/texmf-dist/fonts/tfm/public/cm/cmsy6.tfm" 1678196738 1116 933a60c408fc0a863a92debe84b2d294 ""
   "c:/texlive/2022/texmf-dist/fonts/tfm/public/cm/cmsy8.tfm" 1678196738 1120 8b7d695260f3cff42e636090a8002094 ""
@@ -18,6 +19,7 @@
   "c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb" 1678195212 35752 024fb6c41858982481f6968b5fc26508 ""
   "c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb" 1678195212 32722 d7379af29a190c3f453aba36302ff5a9 ""
   "c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb" 1678195212 32362 bc3f3eec7ab7d65fe700963d4017d32c ""
+  "c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb" 1678195212 33993 9b89b85fd2d9df0482bd47194d1d3bf3 ""
   "c:/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb" 1678196821 138258 6525c253f16cededa14c7fd0da7f67b2 ""
   "c:/texlive/2022/texmf-dist/tex/generic/atbegshi/atbegshi.sty" 1678195521 24708 5584a51a7101caf7e6bbf1fc27d8f7b1 ""
   "c:/texlive/2022/texmf-dist/tex/generic/bigintcalc/bigintcalc.sty" 1678196134 40635 c40361e206be584d448876bba8a64a3b ""
@@ -57,10 +59,10 @@
   "c:/texlive/2022/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1678206379 4662804 131178ccc9b2f4741a821427ce79dce1 ""
   "c:/texlive/2022/texmf-var/web2c/pdftex/pdflatex.fmt" 1678206536 7879888 3de4486bbbc708173f077655ccd20ce7 ""
   "c:/texlive/2022/texmf.cnf" 1678206355 713 614551405fc44b98efbf516466e3c909 ""
-  "d:/github/Regresyon_egitim/outline/main.tex" 1678609672 14938 c8fdd87e9ee2173ee03b777bf616737a ""
-  "main.aux" 1678609674 1386 d93a19259cfcdf12c8a3027310cdd348 "pdflatex"
-  "main.out" 1678609674 1625 ce4c8bc6ba7dfc012abf44aec1b5c49f "pdflatex"
-  "main.tex" 1678609672 14938 c8fdd87e9ee2173ee03b777bf616737a ""
+  "d:/github/Regresyon_egitim/outline/main.tex" 1678956122 14983 1277d740a265e914698cffcf8a5e9ec9 ""
+  "main.aux" 1678956125 1386 79fc7b842654d1c26aa94b0090abcb2c "pdflatex"
+  "main.out" 1678956125 1625 ce4c8bc6ba7dfc012abf44aec1b5c49f "pdflatex"
+  "main.tex" 1678956122 14983 1277d740a265e914698cffcf8a5e9ec9 ""
   (generated)
   "main.aux"
   "main.log"
